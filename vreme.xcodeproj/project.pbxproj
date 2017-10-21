@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		342BC35A1F9020070057279F /* vremeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 342BC3591F9020070057279F /* vremeView.h */; };
-		342BC35C1F9020070057279F /* vremeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342BC35B1F9020070057279F /* vremeView.m */; };
+		342BC3641F9021180057279F /* vremeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342BC3631F9021180057279F /* vremeView.swift */; };
+		34E7B8921F93ABFD0091963E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34E7B8911F93ABFD0091963E /* AppKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		342BC3561F9020070057279F /* vreme.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vreme.saver; sourceTree = BUILT_PRODUCTS_DIR; };
-		342BC3591F9020070057279F /* vremeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vremeView.h; sourceTree = "<group>"; };
-		342BC35B1F9020070057279F /* vremeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = vremeView.m; sourceTree = "<group>"; };
 		342BC35D1F9020070057279F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		342BC3631F9021180057279F /* vremeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vremeView.swift; sourceTree = "<group>"; };
+		34E7B8911F93ABFD0091963E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -23,6 +23,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34E7B8921F93ABFD0091963E /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -34,6 +35,7 @@
 			children = (
 				342BC3581F9020070057279F /* vreme */,
 				342BC3571F9020070057279F /* Products */,
+				34E7B8901F93ABFD0091963E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -48,11 +50,18 @@
 		342BC3581F9020070057279F /* vreme */ = {
 			isa = PBXGroup;
 			children = (
-				342BC3591F9020070057279F /* vremeView.h */,
-				342BC35B1F9020070057279F /* vremeView.m */,
+				342BC3631F9021180057279F /* vremeView.swift */,
 				342BC35D1F9020070057279F /* Info.plist */,
 			);
 			path = vreme;
+			sourceTree = "<group>";
+		};
+		34E7B8901F93ABFD0091963E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				34E7B8911F93ABFD0091963E /* AppKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -62,7 +71,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				342BC35A1F9020070057279F /* vremeView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +106,7 @@
 				TargetAttributes = {
 					342BC3551F9020070057279F = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -134,7 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				342BC35C1F9020070057279F /* vremeView.m in Sources */,
+				342BC3641F9021180057279F /* vremeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,13 +256,19 @@
 		342BC3611F9020070057279F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 38K4763L26;
 				INFOPLIST_FILE = vreme/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dshr.vreme;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = saver;
 			};
 			name = Debug;
@@ -261,13 +276,18 @@
 		342BC3621F9020070057279F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 38K4763L26;
 				INFOPLIST_FILE = vreme/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dshr.vreme;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = saver;
 			};
 			name = Release;
