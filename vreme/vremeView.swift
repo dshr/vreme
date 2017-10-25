@@ -10,22 +10,18 @@ import AppKit
 import ScreenSaver
 
 class vremeView: ScreenSaverView {
-  
-  var date: Date
+	
   let calendar = Calendar.current
   let formatter = DateFormatter()
   
   var debugData = [String: Any]()
   
   override init?(frame: NSRect, isPreview: Bool) {
-    
-    date = Date()
+		
     formatter.dateFormat = "HH:mm:ss"
     formatter.timeZone = .current
     
     super.init(frame: frame, isPreview: isPreview)
-    
-    animationTimeInterval = 0.25
   }
   
   required init?(coder: NSCoder) {
@@ -46,46 +42,80 @@ class vremeView: ScreenSaverView {
   override func animateOneFrame() {
     
     super.animateOneFrame()
-    
+		
+		let date = Date()
+		let time = formatter.string(from: date)
+		
     NSColor.black.setFill()
     bounds.fill()
-    drawTime()
+		
+		NSColor.white.setFill()
+		NSColor.white.set()
+		let directions: [(CGFloat, CGFloat)] = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+		let bitmask = time.toBitmask()
+		let step = bounds.height / 14
+		for (x, y) in directions {
+			
+			drawScreenQuarter(for: bitmask, x: x, y: y, step: step)
+		}
+		
+    drawTime(for: time)
+		drawCredit()
     drawDebug()
   }
+	
+	fileprivate func drawScreenQuarter(for bitmask: [Bool], x: CGFloat, y: CGFloat, step: CGFloat) {
+		
+		let shim = (x: (x == -1.0 ? step : 0), y: (y == -1.0 ? step : 0))
+		let start = (x: (bounds.width / 2) - x * (bounds.width / 2) - shim.x,
+		             y: (bounds.height / 2) - y * (bounds.height / 2) - shim.y)
+		for (index, bit) in bitmask.enumerated() {
+			
+			if bit {
+				
+				let position = (x: CGFloat(index / 7), y: CGFloat(index % 7))
+				let bitRect = NSRect(x: start.x + position.x * step * x, y: start.y + position.y * step * y, width: step, height: step).insetBy(dx: -0.2, dy: -0.2)
+				bitRect.fill()
+			}
+		}
+	}
   
-  fileprivate func drawTime() {
+	fileprivate func drawTime(for time: String) {
+		
+    let timeString = time as NSString
     
-    date = Date()
-    let timeString = formatter.string(from: date) as NSString
-    
-    let hours = Double(calendar.component(.hour, from: date))
-    let minutes = Double(calendar.component(.minute, from: date))
-    let seconds = Double(calendar.component(.second, from: date))
-    let red = CGFloat(hours / 24.0)
-    let green = CGFloat(minutes / 60.0)
-    let blue = CGFloat(seconds / 60.0)
-    let backgroundColour = NSColor(red: red, green: green, blue: blue, alpha: 1.0)
-    
-    let textColour = backgroundColour.brightnessComponent > 0.5 ? NSColor.black : NSColor.white
-    
-    let size = bounds.width / 10
+    let size = bounds.width / 17
     let attributes: [NSAttributedStringKey: Any] = [
-      .foregroundColor: textColour,
+      .foregroundColor: NSColor.black,
       .font: NSFont(name: "Menlo", size: size)!
     ]
     
     let textRect = timeString.boundingRect(with: NSZeroSize, options: .usesLineFragmentOrigin, attributes: attributes)
     let textX = (bounds.width - textRect.width) / 2
-    let textY = (bounds.height - textRect.height) / 2
+    let textY = ((bounds.height - textRect.height) / 2) + size / 10
+
+    let backgroundRect = NSRect(x: bounds.height / 2, y: (bounds.height / 14) * 6, width: bounds.width - bounds.height, height: bounds.height / 7)
     
-    let padding = bounds.width / 100
-    let backgroundRect = NSRect(x: textX - padding * 3, y: textY - padding, width: textRect.width + padding * 6, height: textRect.height)
-    
-    backgroundColour.setFill()
+    NSColor.white.setFill()
     backgroundRect.fill()
     
     timeString.draw(at: NSPoint(x: textX, y: textY), withAttributes: attributes)
   }
+	
+	fileprivate func drawCredit() {
+		
+		let credit = " vreme\nby dshr" as NSString // quite lazy, i know 😅
+		let size = bounds.width / 100
+		let attributes: [NSAttributedStringKey: Any] = [
+			.foregroundColor: NSColor.white,
+			.font: NSFont(name: "Menlo", size: size)!
+		]
+		
+		let textRect = credit.boundingRect(with: NSZeroSize, options: .usesLineFragmentOrigin, attributes: attributes)
+		let textX = (bounds.width - textRect.width) / 2
+		let textY = bounds.height / 112
+		credit.draw(at: NSPoint(x: textX, y: textY), withAttributes: attributes)
+	}
   
   fileprivate func addToDebug(value: Any, under name: String) {
   
