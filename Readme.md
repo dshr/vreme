@@ -4,4 +4,4 @@
 
 ![Preview](preview.gif)
 
-Download [here](https://github.com/dshr/vreme/releases/)
+Download [here](https://github.com/dshr/vreme/releases/).
