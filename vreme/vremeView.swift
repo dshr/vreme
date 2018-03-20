@@ -84,7 +84,7 @@ class vremeView: ScreenSaverView {
 		
     let timeString = time as NSString
     
-    let size = bounds.width / 17
+    let size = pow((bounds.width / bounds.height), 2) * (bounds.width / 60)
     let attributes: [NSAttributedStringKey: Any] = [
       .foregroundColor: NSColor.black,
       .font: NSFont(name: "Menlo", size: size)!
